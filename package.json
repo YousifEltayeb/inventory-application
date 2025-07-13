@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "dotenv": "^17.2.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "node-pg": "^1.0.1"
+  },
+  "name": "inventory-application",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "node --watch app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YousifEltayeb/inventory-application.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YousifEltayeb/inventory-application/issues"
+  },
+  "homepage": "https://github.com/YousifEltayeb/inventory-application#readme"
+}
