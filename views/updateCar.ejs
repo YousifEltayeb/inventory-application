@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update a car</title>
+</head>
+<body>
+<!-- Expects types, brands, errors -->
+  <%- include("errors.ejs") %>
+   <form action="/cars/<%= car.id %>/update" method="POST">
+      <label for="model">Model:</label>
+      <input type="text" id="model" name="model" value="<%= car.model %>" required />
+      <label for="year">Year:</label>
+      <input type="number" id="year" name="year" required value="<%= car.year %>"/>
+      <label for="price">Price:</label>
+      <input type="number" id="price" name="price" required value="<%= car.price %>"/>
+      <label for="brands">Select Brand:</label>
+      <select name="brands" id="brands">
+        <% brands.forEach(function(brand) { %>
+           <option value="<%= brand.name %>"><%= brand.name %></option>  
+        <% }) %>
+      </select>
+      <label for="type"> Select Type:</label>
+      <select name="types" id="types">
+        <% types.forEach(function(types) { %>
+           <option value="<%= types.name %>"><%= types.name %></option>  
+        <% }) %>
+      </select>
+      <button type="submit">Submit:</button>
+   </form> 
+</body>
+</html>
