@@ -52,6 +52,15 @@ async function getTypeById(typeId) {
   );
   return rows[0];
 }
+async function getBrandById(brandId) {
+  const { rows } = await pool.query(
+    `
+        SELECT * FROM brands WHERE id = $1
+`,
+    [brandId],
+  );
+  return rows[0];
+}
 module.exports = {
   getAllTypes,
   getAllBrands,
@@ -59,4 +68,5 @@ module.exports = {
   getCarsByBrandId,
   getCarById,
   getTypeById,
+  getBrandById,
 };

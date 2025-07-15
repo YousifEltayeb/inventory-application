@@ -18,3 +18,11 @@ exports.getNewBrandForm = (req, res) => {
 exports.postNewBrand = async (req, res) => {
   res.send(req.body);
 };
+exports.getUpdateBrandForm = async (req, res) => {
+  const { brandId } = req.params;
+  const brand = await db.getBrandById(brandId);
+  if (!brand) {
+    throw new CustomNotFoundError("Brand not found");
+  }
+  res.render("updateBrand", { brand: brand });
+};
