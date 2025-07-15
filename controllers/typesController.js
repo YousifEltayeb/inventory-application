@@ -24,3 +24,11 @@ exports.postNewType = async (req, res) => {
   console.log(req.body);
   res.end();
 };
+exports.getUpdateTypeForm = async (req, res) => {
+  const { typeId } = req.params;
+  const type = await db.getTypeById(typeId);
+  if (!type) {
+    throw new CustomNotFoundError("Type not found");
+  }
+  res.render("updateType", { type: type });
+};

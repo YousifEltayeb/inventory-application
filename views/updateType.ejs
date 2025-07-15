@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update a type</title>
+</head>
+<body>
+  <%- include("errors.ejs") %>
+   <form action="/types/<%= type.id %>/update" method="POST">
+      <label for="name">Type name:</label>
+      <input type="text" id="name" name="name" value="<%= type.name %>" required />
+      <button type="submit">Submit:</button>
+   </form> 
+</body>
+</html>
