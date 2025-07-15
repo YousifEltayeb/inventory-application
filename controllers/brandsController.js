@@ -2,7 +2,7 @@ const db = require("../db/queries");
 const CustomNotFoundError = require("../errors/customNotFoundError");
 exports.getAllBrands = async (req, res) => {
   const result = await db.getAllBrands();
-  res.send(result);
+  res.render("viewCategories", { title: "Brands", categories: result });
 };
 exports.getAllCarsByBrandId = async (req, res) => {
   const { brandId } = req.params;
@@ -10,7 +10,7 @@ exports.getAllCarsByBrandId = async (req, res) => {
   if (!result[0]) {
     throw new CustomNotFoundError("Brand not found");
   }
-  res.send(result);
+  res.render("cars", { title: "Cars", cars: result });
 };
 exports.getNewBrandForm = (req, res) => {
   res.render("createBrand");

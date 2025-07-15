@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+</head>
+<body>
+  <h1><%= title %></h1>
+    <% if (locals.cars) {%>
+        <% cars.forEach(function(car) { %>
+            <li>
+                <b><%= car.model %></b> | Year: <%= car.year %> | Price: <%= car.price %> | Type: <%= car.type %> | Brand: <%= car.brand %>
+        <br>
+                <a href="/<%= title %>/<%= car.id %>/update">Update car</a>
+            </li>
+      <form action="/<%= title %>/<%= car.id %>/delete" method="POST" style="display:inline;">
+        <button type="submit" onclick="return confirm('Are you sure you want to delete this car?')">Delete car</button>
+      </form>
+        <br>
+        <br>
+        <% }); %>
+    <% } %>
+        <br>
+        <br>
+        <br>
+    <a href="/<%= title %>/new">Add a new car></a>
+</body>
+</html>

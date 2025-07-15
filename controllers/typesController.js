@@ -2,7 +2,7 @@ const db = require("../db/queries");
 const CustomNotFoundError = require("../errors/customNotFoundError");
 exports.getAllTypes = async (req, res) => {
   const result = await db.getAllTypes();
-  res.send(result);
+  res.render("viewCategories", { title: "Types", categories: result });
 };
 exports.getAllCarsByTypeId = async (req, res) => {
   const { typeId } = req.params;
@@ -12,7 +12,7 @@ exports.getAllCarsByTypeId = async (req, res) => {
   if (!result[0]) {
     throw new CustomNotFoundError("Type not found");
   }
-  res.send(result);
+  res.render("cars", { title: "Cars", cars: result });
 };
 
 exports.getNewTypeForm = (req, res) => {

@@ -10,22 +10,36 @@ async function getAllBrands() {
   return rows;
 }
 async function getCarsByBrandId(brandId) {
-  const { rows } = await pool.query("SELECT * FROM cars WHERE brand_id = $1", [
-    brandId,
-  ]);
+  const { rows } = await pool.query(
+    `
+    SELECT cars.id, cars.model, cars.year, cars.price, types.name AS type, brands.name AS brand 
+    FROM cars
+    JOIN types ON cars.type_id = types.id                                    
+    JOIN brands ON cars.brand_id = brands.id
+    WHERE cars.brand_id = $1
+`,
+    [brandId],
+  );
   return rows;
 }
 
 async function getCarsByTypeId(typeId) {
-  const { rows } = await pool.query("SELECT * FROM cars WHERE type_id = $1", [
-    typeId,
-  ]);
+  const { rows } = await pool.query(
+    `
+    SELECT cars.id, cars.model, cars.year, cars.price, types.name AS type, brands.name AS brand 
+    FROM cars
+    JOIN types ON cars.type_id = types.id                                    
+    JOIN brands ON cars.brand_id = brands.id
+    WHERE cars.type_id = $1
+`,
+    [typeId],
+  );
   return rows;
 }
 
 module.exports = {
   getAllTypes,
   getAllBrands,
-  getCarsByBrandId,
   getCarsByTypeId,
+  getCarsByBrandId,
 };
