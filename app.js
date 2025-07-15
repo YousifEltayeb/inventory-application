@@ -19,7 +19,7 @@ const carsRouter = require("./routes/carsRouter");
 app.use("/", indexRouter);
 app.use(/\/types/i, typesRouter);
 app.use(/\/brands/i, brandsRouter);
-app.use(/\/car/i, carsRouter);
+app.use(/\/cars/i, carsRouter);
 
 // Error handling
 app.use((err, req, res, next) => {

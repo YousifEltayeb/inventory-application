@@ -1,5 +1,6 @@
 const db = require("../db/queries");
 const CustomNotFoundError = require("../errors/customNotFoundError");
+
 exports.getAllTypes = async (req, res) => {
   const result = await db.getAllTypes();
   res.render("viewCategories", { title: "Types", categories: result });

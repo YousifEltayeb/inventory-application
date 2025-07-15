@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const carsRouter = Router();
-
-// carsRouter.get("/new");
+const carsController = require("../controllers/carsController");
+carsRouter.get("/new", carsController.getNewCarForm);
 
 module.exports = carsRouter;
