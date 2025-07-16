@@ -43,3 +43,23 @@ exports.postNewBrand = [
     res.redirect("/");
   },
 ];
+exports.postUpdateBrand = [
+  validateBrand,
+  async (req, res) => {
+    const errors = validationResult(req);
+    const { brandId } = req.params;
+    const brand = await db.getTypeById(brandId);
+    if (!brand) {
+      throw new CustomNotFoundError("brand not found");
+    }
+    if (!errors.isEmpty()) {
+      return res.status(400).render("updateBrand", {
+        brand: brand,
+        errors: errors.array(),
+      });
+    }
+    const { name } = req.body;
+    await db.updateBrand(name, brandId);
+    res.redirect("/");
+  },
+];

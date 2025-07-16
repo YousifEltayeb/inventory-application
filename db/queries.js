@@ -141,6 +141,17 @@ async function updateType(name, typeId) {
     [name, typeId],
   );
 }
+
+async function updateBrand(name, brandId) {
+  await pool.query(
+    `
+        UPDATE brands
+        SET name = $1
+        WHERE id =$2
+`,
+    [name, brandId],
+  );
+}
 module.exports = {
   getAllTypes,
   getAllBrands,
@@ -156,4 +167,5 @@ module.exports = {
   insertBrand,
   updateCar,
   updateType,
+  updateBrand,
 };
