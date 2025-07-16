@@ -1,6 +1,6 @@
 const db = require("../db/queries");
 const CustomNotFoundError = require("../errors/customNotFoundError");
-const { validateCar, validationResult } = require("./validation.js");
+const { validateNewCar, validationResult } = require("./validation.js");
 exports.getNewCarForm = async (req, res) => {
   const types = await db.getAllTypes();
   const brands = await db.getAllBrands();
@@ -20,7 +20,7 @@ exports.getUpdateCarForm = async (req, res) => {
 };
 
 exports.postNewCarForm = [
-  validateCar,
+  validateNewCar,
   async (req, res) => {
     const errors = validationResult(req);
     const types = await db.getAllTypes();

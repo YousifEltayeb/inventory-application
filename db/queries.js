@@ -94,6 +94,23 @@ async function insertCar(carInfo) {
     ],
   );
 }
+async function insertType(name) {
+  await pool.query(
+    `
+    INSERT INTO types (name) VALUES($1)
+`,
+    [name],
+  );
+}
+
+async function insertBrand(name) {
+  await pool.query(
+    `
+    INSERT INTO brands (name) VALUES($1)
+`,
+    [name],
+  );
+}
 module.exports = {
   getAllTypes,
   getAllBrands,
@@ -105,4 +122,6 @@ module.exports = {
   insertCar,
   getTypeByName,
   getBrandByName,
+  insertType,
+  insertBrand,
 };

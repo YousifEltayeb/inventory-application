@@ -6,6 +6,7 @@
     <title>Add a brand</title>
 </head>
 <body>
+  <%- include("errors.ejs") %>
    <form action="/brands/new" method="POST">
       <label for="name">Brand name:</label>
       <input type="text" id="name" name="name" required />

@@ -6,6 +6,7 @@
     <title>Add a type</title>
 </head>
 <body>
+  <%- include("errors.ejs") %>
    <form action="/types/new" method="POST">
       <label for="name">Type name:</label>
       <input type="text" id="name" name="name" required />

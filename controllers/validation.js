@@ -3,7 +3,7 @@ const yearErr = "must be a number between 1940 and 2026";
 const priceErr = "must be a number between 1000$ and 5000000$";
 const alphaErr = "must only contain letters.";
 const lengthErr = "must be less than 50 characters";
-const validateCar = [
+const validateNewCar = [
   body("model").trim(),
   body("year")
     .trim()
@@ -22,7 +22,18 @@ const validateCar = [
     .isAlpha("en-US", { ignore: " " })
     .withMessage(`Brand ${alphaErr}`),
 ];
+
+const validateNewType = body("name")
+  .trim()
+  .isAlpha("en-US", { ignore: " " })
+  .withMessage(`Name ${alphaErr}`);
+const validateNewBrand = body("name")
+  .trim()
+  .isAlpha("en-US", { ignore: " " })
+  .withMessage(`Name ${alphaErr}`);
 module.exports = {
-  validateCar,
+  validateNewCar,
+  validateNewType,
+  validateNewBrand,
   validationResult,
 };

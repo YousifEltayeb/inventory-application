@@ -1,4 +1,5 @@
 const db = require("../db/queries");
+const { validateNewType, validationResult } = require("./validation");
 const CustomNotFoundError = require("../errors/customNotFoundError");
 
 exports.getAllTypes = async (req, res) => {
@@ -20,10 +21,6 @@ exports.getNewTypeForm = (req, res) => {
   res.render("createType");
 };
 
-exports.postNewType = async (req, res) => {
-  console.log(req.body);
-  res.end();
-};
 exports.getUpdateTypeForm = async (req, res) => {
   const { typeId } = req.params;
   const type = await db.getTypeById(typeId);
@@ -32,3 +29,20 @@ exports.getUpdateTypeForm = async (req, res) => {
   }
   res.render("updateType", { type: type });
 };
+
+exports.postNewType = [
+  validateNewType,
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).render("createType", {
+        errors: errors.array(),
+      });
+    }
+
+    const { name } = req.body;
+    await db.insertType(name);
+    res.redirect("/");
+  },
+];

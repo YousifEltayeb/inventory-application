@@ -1,4 +1,5 @@
 const db = require("../db/queries");
+const { validateNewBrand, validationResult } = require("./validation");
 const CustomNotFoundError = require("../errors/customNotFoundError");
 exports.getAllBrands = async (req, res) => {
   const result = await db.getAllBrands();
@@ -15,9 +16,6 @@ exports.getAllCarsByBrandId = async (req, res) => {
 exports.getNewBrandForm = (req, res) => {
   res.render("createBrand");
 };
-exports.postNewBrand = async (req, res) => {
-  res.send(req.body);
-};
 exports.getUpdateBrandForm = async (req, res) => {
   const { brandId } = req.params;
   const brand = await db.getBrandById(brandId);
@@ -26,3 +24,20 @@ exports.getUpdateBrandForm = async (req, res) => {
   }
   res.render("updateBrand", { brand: brand });
 };
+
+exports.postNewBrand = [
+  validateNewBrand,
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).render("createType", {
+        errors: errors.array(),
+      });
+    }
+
+    const { name } = req.body;
+    await db.insertBrand(name);
+    res.redirect("/");
+  },
+];
