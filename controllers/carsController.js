@@ -59,7 +59,6 @@ exports.postUpdateCar = [
   async (req, res) => {
     const errors = validationResult(req);
     const { carId } = req.params;
-    Number(carId);
     const car = await db.getCarById(carId);
     const types = await db.getAllTypes();
     const brands = await db.getAllBrands();
@@ -73,6 +72,9 @@ exports.postUpdateCar = [
         car: car,
         errors: errors.array(),
       });
+    }
+    if (!car) {
+      throw new CustomNotFoundError("Car not found");
     }
     const typeObj = await db.getTypeByName(type);
     const brandObj = await db.getBrandByName(brand);

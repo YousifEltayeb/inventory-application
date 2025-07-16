@@ -9,7 +9,9 @@ exports.getAllCarsByBrandId = async (req, res) => {
   const { brandId } = req.params;
   const result = await db.getCarsByBrandId(brandId);
   if (!result[0]) {
-    throw new CustomNotFoundError("Brand not found");
+    throw new CustomNotFoundError(
+      "Brand not found or no cars under this brand",
+    );
   }
   res.render("cars", { title: "Cars", cars: result });
 };

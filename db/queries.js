@@ -114,8 +114,7 @@ async function insertBrand(name) {
 }
 
 async function updateCar(carInfo) {
-  console.log(carInfo);
-  const resolved = await pool.query(
+  await pool.query(
     `
     UPDATE cars
     SET model = $2 , year = $3 , price = $4 , type_id = $5 , brand_id = $6 
@@ -131,7 +130,16 @@ async function updateCar(carInfo) {
       carInfo.brand_id,
     ],
   );
-  console.log("resolved", resolved);
+}
+async function updateType(name, typeId) {
+  await pool.query(
+    `
+        UPDATE types
+        SET name = $1
+        WHERE id = $2
+`,
+    [name, typeId],
+  );
 }
 module.exports = {
   getAllTypes,
@@ -147,4 +155,5 @@ module.exports = {
   insertType,
   insertBrand,
   updateCar,
+  updateType,
 };

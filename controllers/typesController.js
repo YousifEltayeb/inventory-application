@@ -12,7 +12,7 @@ exports.getAllCarsByTypeId = async (req, res) => {
 
   // result will always return an array, checking if the array empty
   if (!result[0]) {
-    throw new CustomNotFoundError("Type not found");
+    throw new CustomNotFoundError("Type not found or not cars under this type");
   }
   res.render("cars", { title: "Cars", cars: result });
 };
@@ -43,6 +43,27 @@ exports.postNewType = [
 
     const { name } = req.body;
     await db.insertType(name);
+    res.redirect("/");
+  },
+];
+
+exports.postUpdateType = [
+  validateType,
+  async (req, res) => {
+    const errors = validationResult(req);
+    const { typeId } = req.params;
+    const type = await db.getTypeById(typeId);
+    if (!type) {
+      throw new CustomNotFoundError("Type not found");
+    }
+    if (!errors.isEmpty()) {
+      return res.status(400).render("updateType", {
+        type: type,
+        errors: errors.array(),
+      });
+    }
+    const { name } = req.body;
+    await db.updateType(name, typeId);
     res.redirect("/");
   },
 ];
