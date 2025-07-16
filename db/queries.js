@@ -80,6 +80,7 @@ async function getBrandByName(brandName) {
   return rows[0];
 }
 async function insertCar(carInfo) {
+  console.log("inserted", carInfo);
   await pool.query(
     `
     INSERT INTO cars (model, year, price, type_id, brand_id)
@@ -111,6 +112,27 @@ async function insertBrand(name) {
     [name],
   );
 }
+
+async function updateCar(carInfo) {
+  console.log(carInfo);
+  const resolved = await pool.query(
+    `
+    UPDATE cars
+    SET model = $2 , year = $3 , price = $4 , type_id = $5 , brand_id = $6 
+    WHERE id = $1
+    RETURNING *;
+`,
+    [
+      carInfo.carId,
+      carInfo.model,
+      carInfo.year,
+      carInfo.price,
+      carInfo.type_id,
+      carInfo.brand_id,
+    ],
+  );
+  console.log("resolved", resolved);
+}
 module.exports = {
   getAllTypes,
   getAllBrands,
@@ -124,4 +146,5 @@ module.exports = {
   getBrandByName,
   insertType,
   insertBrand,
+  updateCar,
 };

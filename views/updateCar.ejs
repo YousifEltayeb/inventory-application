@@ -15,16 +15,22 @@
       <input type="number" id="year" name="year" required value="<%= car.year %>"/>
       <label for="price">Price:</label>
       <input type="number" id="price" name="price" required value="<%= car.price %>"/>
-      <label for="brands">Select Brand:</label>
-      <select name="brands" id="brands">
+      <label for="brand">Select Brand:</label>
+      <select name="brand" id="brand">
         <% brands.forEach(function(brand) { %>
+            <% if (brand.id === car.brand_id) { %>
+                <option value="<%= brand.name %>" selected><%= brand.name %></option>  
+            <% } %> 
            <option value="<%= brand.name %>"><%= brand.name %></option>  
         <% }) %>
       </select>
       <label for="type"> Select Type:</label>
-      <select name="types" id="types">
-        <% types.forEach(function(types) { %>
-           <option value="<%= types.name %>"><%= types.name %></option>  
+      <select name="type" id="type">
+        <% types.forEach(function(type) { %>
+            <% if (type.id === car.type_id) { %>
+                <option value="<%= type.name %>" selected><%= type.name %></option>  
+            <% } %> 
+           <option value="<%= type.name %>"><%= type.name %></option>  
         <% }) %>
       </select>
       <button type="submit">Submit:</button>

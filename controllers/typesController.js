@@ -1,5 +1,5 @@
 const db = require("../db/queries");
-const { validateNewType, validationResult } = require("./validation");
+const { validateType, validationResult } = require("./validation");
 const CustomNotFoundError = require("../errors/customNotFoundError");
 
 exports.getAllTypes = async (req, res) => {
@@ -31,7 +31,7 @@ exports.getUpdateTypeForm = async (req, res) => {
 };
 
 exports.postNewType = [
-  validateNewType,
+  validateType,
   async (req, res) => {
     const errors = validationResult(req);
 

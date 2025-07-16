@@ -1,5 +1,5 @@
 const db = require("../db/queries");
-const { validateNewBrand, validationResult } = require("./validation");
+const { validateBrand, validationResult } = require("./validation");
 const CustomNotFoundError = require("../errors/customNotFoundError");
 exports.getAllBrands = async (req, res) => {
   const result = await db.getAllBrands();
@@ -26,7 +26,7 @@ exports.getUpdateBrandForm = async (req, res) => {
 };
 
 exports.postNewBrand = [
-  validateNewBrand,
+  validateBrand,
   async (req, res) => {
     const errors = validationResult(req);
 

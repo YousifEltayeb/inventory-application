@@ -1,6 +1,6 @@
 const db = require("../db/queries");
 const CustomNotFoundError = require("../errors/customNotFoundError");
-const { validateNewCar, validationResult } = require("./validation.js");
+const { validateCar, validationResult } = require("./validation.js");
 exports.getNewCarForm = async (req, res) => {
   const types = await db.getAllTypes();
   const brands = await db.getAllBrands();
@@ -12,7 +12,6 @@ exports.getUpdateCarForm = async (req, res) => {
   const types = await db.getAllTypes();
   const brands = await db.getAllBrands();
   const car = await db.getCarById(carId);
-  console.log(car);
   if (!car) {
     throw new CustomNotFoundError("Car not found");
   }
@@ -20,9 +19,10 @@ exports.getUpdateCarForm = async (req, res) => {
 };
 
 exports.postNewCarForm = [
-  validateNewCar,
+  validateCar,
   async (req, res) => {
     const errors = validationResult(req);
+
     const types = await db.getAllTypes();
     const brands = await db.getAllBrands();
 
@@ -44,6 +44,45 @@ exports.postNewCarForm = [
     const type_id = typeObj.id;
     const brand_id = brandObj.id;
     await db.insertCar({
+      model,
+      year,
+      price,
+      type_id,
+      brand_id,
+    });
+    res.redirect("/");
+  },
+];
+
+exports.postUpdateCar = [
+  validateCar,
+  async (req, res) => {
+    const errors = validationResult(req);
+    const { carId } = req.params;
+    Number(carId);
+    const car = await db.getCarById(carId);
+    const types = await db.getAllTypes();
+    const brands = await db.getAllBrands();
+
+    const { model, year, price, type, brand } = req.body;
+    console.log({ model, year, price, type, brand });
+    if (!errors.isEmpty()) {
+      return res.status(400).render("updateCar", {
+        types: types,
+        brands: brands,
+        car: car,
+        errors: errors.array(),
+      });
+    }
+    const typeObj = await db.getTypeByName(type);
+    const brandObj = await db.getBrandByName(brand);
+    if (!typeObj || !brandObj) {
+      throw new CustomNotFoundError("Type or brand not found");
+    }
+    const type_id = typeObj.id;
+    const brand_id = brandObj.id;
+    await db.updateCar({
+      carId,
       model,
       year,
       price,
