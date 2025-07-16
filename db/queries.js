@@ -1,5 +1,4 @@
 const pool = require("./pool");
-
 async function getAllTypes() {
   const { rows } = await pool.query("SELECT * FROM types");
   return rows;
@@ -61,6 +60,40 @@ async function getBrandById(brandId) {
   );
   return rows[0];
 }
+async function getTypeByName(typeName) {
+  const { rows } = await pool.query(
+    `
+    SELECT * FROM types WHERE name = $1
+`,
+    [typeName],
+  );
+  return rows[0];
+}
+
+async function getBrandByName(brandName) {
+  const { rows } = await pool.query(
+    `
+    SELECT * FROM brands WHERE name = $1
+`,
+    [brandName],
+  );
+  return rows[0];
+}
+async function insertCar(carInfo) {
+  await pool.query(
+    `
+    INSERT INTO cars (model, year, price, type_id, brand_id)
+    VALUES($1, $2, $3, $4, $5 )
+`,
+    [
+      carInfo.model,
+      carInfo.year,
+      carInfo.price,
+      carInfo.type_id,
+      carInfo.brand_id,
+    ],
+  );
+}
 module.exports = {
   getAllTypes,
   getAllBrands,
@@ -69,4 +102,7 @@ module.exports = {
   getCarById,
   getTypeById,
   getBrandById,
+  insertCar,
+  getTypeByName,
+  getBrandByName,
 };

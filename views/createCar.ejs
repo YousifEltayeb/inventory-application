@@ -15,16 +15,16 @@
       <input type="number" id="year" name="year" required />
       <label for="price">Price:</label>
       <input type="number" id="price" name="price" required />
-      <label for="brands">Select Brand:</label>
-      <select name="brands" id="brands">
+      <label for="brand">Select Brand:</label>
+      <select name="brand" id="brand">
         <% brands.forEach(function(brand) { %>
            <option value="<%= brand.name %>"><%= brand.name %></option>  
         <% }) %>
       </select>
       <label for="type"> Select Type:</label>
-      <select name="types" id="types">
-        <% types.forEach(function(types) { %>
-           <option value="<%= types.name %>"><%= types.name %></option>  
+      <select name="type" id="type">
+        <% types.forEach(function(type) { %>
+           <option value="<%= type.name %>"><%= type.name %></option>  
         <% }) %>
       </select>
       <button type="submit">Submit:</button>
