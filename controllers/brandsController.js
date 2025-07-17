@@ -63,3 +63,14 @@ exports.postUpdateBrand = [
     res.redirect("/");
   },
 ];
+exports.deleteBrand = async (req, res) => {
+  const { brandId } = req.params;
+  const cars = await db.getCarsByBrandId(brandId);
+  if (cars[0]) {
+    throw new CustomNotFoundError(
+      "Only empty brands can be deleted. Delete all cars under it first",
+    );
+  }
+  await db.deleteBrand(brandId);
+  res.redirect("/");
+};
