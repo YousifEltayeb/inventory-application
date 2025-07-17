@@ -94,3 +94,9 @@ exports.postUpdateCar = [
     res.redirect("/");
   },
 ];
+
+exports.deleteCar = async (req, res) => {
+  const { carId } = req.params;
+  await db.deleteCar(carId);
+  res.redirect("/");
+};
