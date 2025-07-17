@@ -67,3 +67,16 @@ exports.postUpdateType = [
     res.redirect("/");
   },
 ];
+
+exports.deleteType = async (req, res) => {
+  const { typeId } = req.params;
+  const cars = await db.getCarsByTypeId(typeId);
+
+  if (cars[0]) {
+    throw new CustomNotFoundError(
+      "Only empty types can be deleted, remove all cars under this type to delete it.",
+    );
+  }
+  await db.deleteType(typeId);
+  res.redirect("/");
+};

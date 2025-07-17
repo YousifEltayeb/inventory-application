@@ -163,6 +163,16 @@ async function deleteCar(carId) {
     [carId],
   );
 }
+async function deleteType(typeId) {
+  await pool.query(
+    `
+    DELETE from types 
+    WHERE id = $1 
+
+`,
+    [typeId],
+  );
+}
 module.exports = {
   getAllTypes,
   getAllBrands,
@@ -180,4 +190,5 @@ module.exports = {
   updateType,
   updateBrand,
   deleteCar,
+  deleteType,
 };
