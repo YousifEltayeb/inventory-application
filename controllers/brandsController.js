@@ -48,7 +48,7 @@ exports.postUpdateBrand = [
   async (req, res) => {
     const errors = validationResult(req);
     const { brandId } = req.params;
-    const brand = await db.getTypeById(brandId);
+    const brand = await db.getBrandById(brandId);
     if (!brand) {
       throw new CustomNotFoundError("brand not found");
     }
